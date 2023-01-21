@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import vetor from "../assets/Vector.png";
-import { AddCircleOutline, RemoveCircleOutline } from "react-ionicons";
 
 export default function Home() {
   return (
@@ -16,12 +15,12 @@ export default function Home() {
       </Registros>
       <ContainerRegistros>
         <div>
-          <AddCircleOutline color={"#ffffff"} height="22px" width="22px" />
-          <p>Nova entrada</p>
+          <ion-icon name="add-circle-outline"></ion-icon>
+          <p>Nova <br></br>  entrada</p>
         </div>
         <div>
-          <RemoveCircleOutline color={"#ffffff"} height="22px" width="22px" />
-          <p>Nova saída</p>
+          <ion-icon name="remove-circle-outline"></ion-icon>
+          <p>Nova <br></br> saída</p>
         </div>
       </ContainerRegistros>
     </Container>
