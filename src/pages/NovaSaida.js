@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useContext, useState } from "react";
 import axios from "axios";
 import context from "../context/Context";
+import { Link } from "react-router-dom";
 
 export default function NovaSaida() {
   const { config, setConfig } = useContext(context);
@@ -57,7 +58,9 @@ export default function NovaSaida() {
             placeholder="Descrição"
           />
         </label>
-        <Salvar>Salvar saída</Salvar>
+        <Link to={"/home"}>
+          <Salvar>Salvar saída</Salvar>
+        </Link>
       </Valor>
     </Container>
   );

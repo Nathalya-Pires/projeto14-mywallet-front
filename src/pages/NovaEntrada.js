@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useContext, useState } from "react";
 import axios from "axios";
 import context from "../context/Context";
+import { Link } from "react-router-dom";
 
 export default function NovaEntrada() {
   const { config, setConfig } = useContext(context);
@@ -57,7 +58,9 @@ export default function NovaEntrada() {
             placeholder="Descrição"
           />
         </label>
+        <Link to={"/home"}>
         <Salvar>Salvar entrada</Salvar>
+        </Link>
       </Valor>
     </Container>
   );
