@@ -1,20 +1,24 @@
 import Cadastro from "./pages/Cadastro";
-import HomePage from "./pages/HomePage";
 import Home from "./pages/Home";
-import GlobalStyle from "./style/GlobalStyle";
 import NovaEntrada from "./pages/NovaEntrada";
 import NovaSaida from "./pages/NovaSaida";
+import HomePage from "./pages/Login";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {UserProvider} from "./context/Context"
 
 function App() {
   return (
-    <>
-      <GlobalStyle />
-      {/* <HomePage/>
-    <Cadastro/>
-      <Home />
-      <NovaEntrada/> */}
-      <NovaSaida/>
-    </>
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/nova-entrada" element={<NovaEntrada />} />
+          <Route path="/nova-saida" element={<NovaSaida />} />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 

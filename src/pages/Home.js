@@ -1,26 +1,67 @@
 import styled from "styled-components";
 import vetor from "../assets/Vector.png";
+import context from "../context/Context";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Home() {
+  const { info, config } = useContext(context);
+  const [transactions, setTransactions] = useState([]);
+  const [balance, setBalance] = useState([]);
+
+  useEffect(() => {
+    const req = axios.get(`${process.env.REACT_APP_API_URL}/home`, config);
+    req.then(
+      (res) => (
+        setTransactions(res.data.infos),
+        setBalance(res.data.balance[0]),
+        console.log(res.data)
+      )
+    );
+    req.catch((err) => alert(err));
+  }, []);
+
   return (
     <Container>
       <Topo>
-        <p>Olá, Nathy</p>
-        <Sair src={vetor} alt={"Icone de sair"} />
+        <p>Olá, {info.name}</p>
+        <Link to={"/"}>
+          <Sair src={vetor} alt={"Icone de sair"} />
+        </Link>
       </Topo>
       <Registros>
-        <p>
-          Não há registros de <br></br>entrada ou saída
-        </p>
+        {transactions ? (
+          transactions.map((t) => (
+            <ListaDados>
+              <Data>{t.date}</Data>
+              <Descrição>{t.description}</Descrição>
+              <Valor>{t.value}</Valor>
+            </ListaDados>
+          ))
+        ) : (
+          <p>
+            Não há registros de <br></br>entrada ou saída
+          </p>
+        )}
+        <Saldo>{transactions ? balance.saldo : ""}</Saldo>
       </Registros>
       <ContainerRegistros>
         <div>
-          <ion-icon name="add-circle-outline"></ion-icon>
-          <p>Nova <br></br>  entrada</p>
+          <Link to={"/nova-entrada"}>
+            <ion-icon name="add-circle-outline"></ion-icon>
+            <p>
+              Nova <br></br> entrada
+            </p>
+          </Link>
         </div>
         <div>
-          <ion-icon name="remove-circle-outline"></ion-icon>
-          <p>Nova <br></br> saída</p>
+          <Link to={"/nova-saida"}>
+            <ion-icon name="remove-circle-outline"></ion-icon>
+            <p>
+              Nova <br></br> saída
+            </p>
+          </Link>
         </div>
       </ContainerRegistros>
     </Container>
@@ -101,3 +142,15 @@ const ContainerRegistros = styled.div`
     }
   }
 `;
+
+const ListaDados = styled.div`
+  background-color: red;
+`;
+
+const Data = styled.div``;
+
+const Descrição = styled.div``;
+
+const Valor = styled.div``;
+
+const Saldo = styled.div``;

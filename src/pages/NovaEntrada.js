@@ -1,14 +1,31 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import axios from "axios";
+import context from "../context/Context";
 
 export default function NovaEntrada() {
+  const { config, setConfig } = useContext(context);
   const [form, setForm] = useState({
-    email: "",
-    password: "",
+    value: "",
+    description: "",
   });
 
   function handleForm(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
+    console.log(form);
+    console.log(config);
+  }
+
+  function addEntry(e) {
+    e.preventDefault();
+
+    const req = axios.post(
+      `${process.env.REACT_APP_API_URL}/nova-entrada`,
+      form,
+      config
+    );
+    req.then((res) => console.log(res.data));
+    req.catch((err) => alert(err.response.data.message));
   }
 
   return (
@@ -16,13 +33,13 @@ export default function NovaEntrada() {
       <Topo>
         <p>Nova entrada</p>
       </Topo>
-      <Valor>
+      <Valor onSubmit={addEntry}>
         <label>
           <input
             type="number"
-            name="number"
+            name="value"
             onChange={handleForm}
-            value={form.number}
+            value={form.value}
             minLength={1}
             required
             placeholder="Valor"
@@ -31,9 +48,9 @@ export default function NovaEntrada() {
         <label>
           <input
             type="text"
-            name="text"
+            name="description"
             onChange={handleForm}
-            value={form.text}
+            value={form.description}
             minLength={2}
             maxLength={30}
             required

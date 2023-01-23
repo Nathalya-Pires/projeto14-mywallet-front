@@ -1,34 +1,49 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import context from "../context/Context";
 
 export default function Cadastro() {
+  const navigate = useNavigate();
+  const { config } = useContext(context);
   const [form, setForm] = useState({
     email: "",
     password: "",
+    confirmPassword: "",
     name: "",
-    image: "",
   });
 
   function handleForm(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
+    console.log(form)
+  }
+
+  function enviaCadastro(e) {
+    e.preventDefault();
+
+    const requisicao = axios.post(
+      `${process.env.REACT_APP_API_URL}/cadastro`,
+      form
+    );
+    requisicao.then((res) => navigate("/"));
+    requisicao.catch((err) => alert(err.response.data.message));
   }
 
   return (
     <Container>
       <h1>MyWallet</h1>
-      <Dados>
+      <Dados onSubmit={enviaCadastro}>
         <input
-          data-test="user-name-input"
           type="text"
           name="name"
           onChange={handleForm}
           value={form.name}
-          minLength={5}
+          minLength={3}
           required
           placeholder="Nome"
         />
         <input
-          data-test="email-input"
           type="email"
           name="email"
           onChange={handleForm}
@@ -38,7 +53,6 @@ export default function Cadastro() {
           placeholder="E-mail"
         />
         <input
-          data-test="password-input"
           type="password"
           name="password"
           onChange={handleForm}
@@ -48,11 +62,10 @@ export default function Cadastro() {
           placeholder="Senha"
         />
         <input
-          data-test="password-input"
           type="password"
-          name="password"
+          name="confirmPassword"
           onChange={handleForm}
-          value={form.password}
+          value={form.confirmPassword}
           minLength={5}
           required
           placeholder="Confirme a senha"

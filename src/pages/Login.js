@@ -1,7 +1,13 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import context from "../context/Context";
+
 
 export default function HomePage() {
+  const navigate = useNavigate();
+  const { setInfo, setConfig } = useContext(context);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -11,10 +17,29 @@ export default function HomePage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
+  function login(e) {
+    e.preventDefault();
+
+    const req = axios.post(`${process.env.REACT_APP_API_URL}/login`, form);
+    req.then(
+      (res) => (
+        console.log(res.data),
+        setInfo(res.data),
+        setConfig({
+          headers: {
+            Authorization: `Bearer ${res.data.token}`,
+          },
+        }),
+        navigate("/home")
+      )
+    );
+    req.catch((err) => alert(err));
+  }
+
   return (
     <Container>
       <h1>MyWallet</h1>
-      <Login>
+      <Login onSubmit={login}>
         <label>
           <input
             type="email"
@@ -40,7 +65,7 @@ export default function HomePage() {
         <Entrar>Entrar</Entrar>
       </Login>
       <p>
-        Primeira vez? Cadastre-se!
+        <Link to={"/cadastro"}>Primeira vez? Cadastre-se!</Link>
       </p>
     </Container>
   );
