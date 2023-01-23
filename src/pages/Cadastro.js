@@ -72,7 +72,7 @@ export default function Cadastro() {
         />
         <Cadastrar>Cadastrar</Cadastrar>
       </Dados>
-      <p>Já tem uma conta? Entre agora!</p>
+      <p><Link to={"/"}>Já tem uma conta? Entre agora!</Link></p>
     </Container>
   );
 }

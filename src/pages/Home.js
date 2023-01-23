@@ -44,7 +44,7 @@ export default function Home() {
             Não há registros de <br></br>entrada ou saída
           </p>
         )}
-        <Saldo>{transactions ? balance.saldo : ""}</Saldo>
+        <Saldo>Saldo {transactions ? balance.saldo : ""}</Saldo>
       </Registros>
       <ContainerRegistros>
         <div>
@@ -108,6 +108,8 @@ const Registros = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 25px;
+  display: flex;
+  flex-direction: column;
 
   p {
     font-family: "Raleway";
@@ -119,6 +121,7 @@ const Registros = styled.div`
   }
 `;
 const ContainerRegistros = styled.div`
+
   display: flex;
   justify-content: center;
   width: 100%;
@@ -144,13 +147,37 @@ const ContainerRegistros = styled.div`
 `;
 
 const ListaDados = styled.div`
-  background-color: red;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 5%;
+  padding-left: 5%;
+  
+
 `;
 
-const Data = styled.div``;
+const Data = styled.div`
 
-const Descrição = styled.div``;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #c6c6c6;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Descrição = styled.div`
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+color: #000000;`;
 
 const Valor = styled.div``;
 
-const Saldo = styled.div``;
+const Saldo = styled.div`
+
+`;
