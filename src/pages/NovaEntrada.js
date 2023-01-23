@@ -25,7 +25,7 @@ export default function NovaEntrada() {
       config
     );
     req.then((res) => console.log(res.data));
-    req.catch((err) => alert(err.response.data.message));
+    req.catch((err) => alert(err));
   }
 
   return (
